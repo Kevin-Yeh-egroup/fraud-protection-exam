@@ -312,7 +312,7 @@ export const questions: Question[] = [
 export const defenseTypes = [
   {
     index: 0,
-    name: "浪推前行者",
+    name: "情緒牽動型",
     subtitle: "在急迫與關係中，容易被情境一路推著走",
     color: "hsl(var(--type-red))",
     colorClass: "bg-[hsl(var(--type-red))]",
@@ -320,7 +320,7 @@ export const defenseTypes = [
     textClass: "text-[hsl(var(--type-red))]",
     illustration: {
       src: "/浪推前行者.png",
-      alt: "浪推前行者插圖",
+      alt: "情緒牽動型插圖",
     },
     description: [
       "你很重視關係，也不喜歡讓事情變得尷尬或破裂。🤝",
@@ -344,7 +344,7 @@ export const defenseTypes = [
   },
   {
     index: 1,
-    name: "門口停步者",
+    name: "觀望但易被說服型",
     subtitle: "察覺異常，卻還在門口猶豫是否前進",
     color: "hsl(var(--type-orange))",
     colorClass: "bg-[hsl(var(--type-orange))]",
@@ -352,7 +352,7 @@ export const defenseTypes = [
     textClass: "text-[hsl(var(--type-orange))]",
     illustration: {
       src: "/門口停步者.png",
-      alt: "門口停步者插圖",
+      alt: "觀望但易被說服型插圖",
     },
     description: [
       "你通常第一時間就會覺得哪裡怪怪的。🤔",
@@ -379,7 +379,7 @@ export const defenseTypes = [
   },
   {
     index: 2,
-    name: "看圖再行者",
+    name: "理性查證型",
     subtitle: "習慣查證方向，再決定行動",
     color: "hsl(var(--type-yellow))",
     colorClass: "bg-[hsl(var(--type-yellow))]",
@@ -387,7 +387,7 @@ export const defenseTypes = [
     textClass: "text-[hsl(var(--type-yellow))]",
     illustration: {
       src: "/看圖再行者.png",
-      alt: "看圖再行者插圖",
+      alt: "理性查證型插圖",
     },
     description: [
       "你面對可疑情境時，通常會先查資料、找來源、比對資訊。🔍",
@@ -411,7 +411,7 @@ export const defenseTypes = [
   },
   {
     index: 3,
-    name: "關門守線者",
+    name: "高防禦穩定型",
     subtitle: "界線清楚，知道什麼時候該關門保護自己",
     color: "hsl(var(--type-green))",
     colorClass: "bg-[hsl(var(--type-green))]",
@@ -419,7 +419,7 @@ export const defenseTypes = [
     textClass: "text-[hsl(var(--type-green))]",
     illustration: {
       src: "/關門守線者.png",
-      alt: "關門守線者插圖",
+      alt: "高防禦穩定型插圖",
     },
     description: [
       "你對界線很清楚，知道什麼不能給、什麼不需要解釋、什麼時候該直接拒絕。🚪",
