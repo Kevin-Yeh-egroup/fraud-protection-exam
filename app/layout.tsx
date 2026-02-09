@@ -12,7 +12,7 @@ const notoSansTC = Noto_Sans_TC({
 
 export const metadata: Metadata = {
   title: '詐騙防禦能力檢測',
-  description: '透過 10 個生活情境問題，了解你在面對詐騙時，最常出現的第一反應。',
+  description: '透過 10 個生活情境問題，了解你的詐騙防禦類型。',
 }
 
 export const viewport: Viewport = {
