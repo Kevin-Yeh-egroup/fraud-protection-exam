@@ -2,12 +2,11 @@
 
 import type { QuizResult } from "@/lib/quiz-data"
 import { defenseTypes } from "@/lib/quiz-data"
-import { DefenseRadarChart } from "@/components/radar-chart"
-import { DefenseTypes } from "@/components/defense-types"
 import { ActionButtons } from "@/components/action-buttons"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Shield, RotateCcw } from "lucide-react"
+import Image from "next/image"
 
 interface QuizResultPageProps {
   result: QuizResult
@@ -21,8 +20,17 @@ const typeColorBgs = [
   "bg-[hsl(145,45%,48%)]",
 ]
 
+const resultBlessing = [
+  "不論你落在哪一型，這些反應都不是缺點。💛",
+  "而是你一路走來形成的生存方式。",
+  "能看懂自己的反應，就已經是在替自己多留一條安全的路。🧭",
+  "如果你最近正承受比較大的壓力，或遇到讓你難以判斷的情境。",
+  "你不需要一個人想清楚所有事。",
+  "有人一起看，事情會變得比較不那麼可怕。🤝",
+]
+
 export function QuizResultPage({ result, onRestart }: QuizResultPageProps) {
-  const activeType = defenseTypes[result.typeIndex]
+  const activeType = defenseTypes[result.typeIndex] ?? defenseTypes[0]
 
   return (
     <div className="min-h-screen bg-background">
@@ -63,35 +71,42 @@ export function QuizResultPage({ result, onRestart }: QuizResultPageProps) {
                   {result.typeName}
                 </h2>
               </div>
-              <p className="text-sm text-muted-foreground leading-relaxed max-w-lg">
-                {result.typeIndex === 0 &&
-                  "你通常在時間壓力或情感連結下，較容易先行動再思考。這樣的反應很常見，但也是詐騙話術最容易利用的階段。"}
-                {result.typeIndex === 1 &&
-                  "你通常能察覺事情「怪怪的」，但在不確定、熟人或時間壓力下，有時會選擇先保留彈性，而非立即拒絕。這樣的反應在現實中很常見，但也是詐騙話術最容易持續推進的階段。"}
-                {result.typeIndex === 2 &&
-                  "你會主動查資料、找官方來源，不輕易被單一說法說服。這樣的防禦模式相對穩定，但在熟人或情感情境中，仍要維持同樣標準。"}
-                {result.typeIndex === 3 &&
-                  "你的界線明確，能快速辨識並拒絕可疑情境。不容易被話術牽著走，但請記住詐騙手法會不斷更新，維持警覺比自信更重要。"}
-              </p>
+              {activeType.illustration?.src && (
+                <div className="flex justify-center">
+                  <Image
+                    src={activeType.illustration.src}
+                    alt={activeType.illustration.alt ?? `${activeType.name}插圖`}
+                    width={560}
+                    height={400}
+                    sizes="(max-width: 768px) 90vw, 560px"
+                    className="h-72 w-auto max-w-full md:h-80"
+                  />
+                </div>
+              )}
+              <div className="text-sm text-muted-foreground leading-relaxed max-w-lg">
+                <div className="flex flex-col gap-3">
+                  {activeType.description.map((paragraph, index) => (
+                    <p key={`${activeType.name}-desc-${index}`}>{paragraph}</p>
+                  ))}
+                </div>
+              </div>
             </div>
           </CardContent>
         </Card>
 
-        {/* Radar Chart */}
         <Card className="mb-8 border bg-card">
           <CardContent className="p-6 md:p-8">
-            <DefenseRadarChart result={result} />
+            <div className="flex flex-col gap-3 text-sm text-muted-foreground leading-relaxed text-center">
+              {resultBlessing.map((line, index) => (
+                <p key={`blessing-${index}`}>{line}</p>
+              ))}
+            </div>
           </CardContent>
         </Card>
 
-        {/* Defense Types Accordion */}
-        <div className="mb-8">
-          <DefenseTypes activeTypeIndex={result.typeIndex} />
-        </div>
-
         {/* Action Buttons & Share */}
         <div className="mb-8">
-          <ActionButtons />
+          <ActionButtons defenseTypeName={activeType.name} defenseTypeIndex={activeType.index} />
         </div>
 
         {/* Restart Button */}

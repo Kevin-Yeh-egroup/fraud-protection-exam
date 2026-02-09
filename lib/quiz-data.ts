@@ -1,30 +1,30 @@
-// Each question maps answers to scores across 4 dimensions:
+// Each answer maps to one dimension via option label, and scores are derived from option counts.
 // infoVerification (資訊查證力), emotionalStability (情緒穩定度),
 // boundaryAwareness (界線感), riskJudgment (風險判斷力)
+
+export type DimensionKey =
+  | "infoVerification"
+  | "emotionalStability"
+  | "boundaryAwareness"
+  | "riskJudgment"
+
+export type OptionLabel = "A" | "B" | "C" | "D"
+
+export interface QuestionOption {
+  label: OptionLabel
+  text: string
+  isPositive: boolean
+}
 
 export interface Question {
   id: number
   tag: string
   scenario: string
-  options: {
-    label: string
-    text: string
-    scores: {
-      infoVerification: number
-      emotionalStability: number
-      boundaryAwareness: number
-      riskJudgment: number
-    }
-  }[]
+  options: QuestionOption[]
 }
 
 export interface QuizResult {
-  scores: {
-    infoVerification: number
-    emotionalStability: number
-    boundaryAwareness: number
-    riskJudgment: number
-  }
+  scores: Record<DimensionKey, number>
   typeIndex: number
   typeName: string
   typeColor: string
@@ -40,22 +40,22 @@ export const questions: Question[] = [
       {
         label: "A",
         text: "立刻加好友，之後再確認",
-        scores: { infoVerification: 1, emotionalStability: 1, boundaryAwareness: 1, riskJudgment: 1 },
+        isPositive: false,
       },
       {
         label: "B",
         text: "詢問對方能否用舊方式聯絡",
-        scores: { infoVerification: 3, emotionalStability: 3, boundaryAwareness: 2, riskJudgment: 3 },
+        isPositive: true,
       },
       {
         label: "C",
         text: "完全不回、不加",
-        scores: { infoVerification: 2, emotionalStability: 4, boundaryAwareness: 4, riskJudgment: 4 },
+        isPositive: true,
       },
       {
         label: "D",
         text: "覺得怪怪的，但還是加了再觀察",
-        scores: { infoVerification: 2, emotionalStability: 2, boundaryAwareness: 2, riskJudgment: 2 },
+        isPositive: false,
       },
     ],
   },
@@ -68,22 +68,22 @@ export const questions: Question[] = [
       {
         label: "A",
         text: "點連結看看再說",
-        scores: { infoVerification: 1, emotionalStability: 1, boundaryAwareness: 1, riskJudgment: 1 },
+        isPositive: false,
       },
       {
         label: "B",
         text: "搜尋活動名稱確認真偽",
-        scores: { infoVerification: 4, emotionalStability: 3, boundaryAwareness: 2, riskJudgment: 3 },
+        isPositive: true,
       },
       {
         label: "C",
         text: "直接刪除",
-        scores: { infoVerification: 2, emotionalStability: 4, boundaryAwareness: 4, riskJudgment: 4 },
+        isPositive: true,
       },
       {
         label: "D",
         text: "轉傳給朋友問意見",
-        scores: { infoVerification: 2, emotionalStability: 2, boundaryAwareness: 2, riskJudgment: 2 },
+        isPositive: false,
       },
     ],
   },
@@ -95,22 +95,22 @@ export const questions: Question[] = [
       {
         label: "A",
         text: "先跟著少量試試",
-        scores: { infoVerification: 1, emotionalStability: 1, boundaryAwareness: 1, riskJudgment: 1 },
+        isPositive: false,
       },
       {
         label: "B",
         text: "要求看完整交易紀錄與公司資料",
-        scores: { infoVerification: 4, emotionalStability: 3, boundaryAwareness: 2, riskJudgment: 3 },
+        isPositive: true,
       },
       {
         label: "C",
         text: "覺得太誇張，直接退出",
-        scores: { infoVerification: 2, emotionalStability: 4, boundaryAwareness: 4, riskJudgment: 4 },
+        isPositive: true,
       },
       {
         label: "D",
         text: "潛水觀察一陣子",
-        scores: { infoVerification: 2, emotionalStability: 2, boundaryAwareness: 2, riskJudgment: 2 },
+        isPositive: false,
       },
     ],
   },
@@ -123,22 +123,22 @@ export const questions: Question[] = [
       {
         label: "A",
         text: "按照指示操作",
-        scores: { infoVerification: 1, emotionalStability: 1, boundaryAwareness: 1, riskJudgment: 1 },
+        isPositive: false,
       },
       {
         label: "B",
         text: "掛掉後自己打銀行客服",
-        scores: { infoVerification: 4, emotionalStability: 3, boundaryAwareness: 3, riskJudgment: 4 },
+        isPositive: true,
       },
       {
         label: "C",
         text: "直接掛掉，不理會",
-        scores: { infoVerification: 2, emotionalStability: 4, boundaryAwareness: 4, riskJudgment: 3 },
+        isPositive: true,
       },
       {
         label: "D",
         text: "問對方姓名、分機再決定",
-        scores: { infoVerification: 3, emotionalStability: 2, boundaryAwareness: 2, riskJudgment: 2 },
+        isPositive: false,
       },
     ],
   },
@@ -150,22 +150,22 @@ export const questions: Question[] = [
       {
         label: "A",
         text: "小額幫忙，畢竟有感情",
-        scores: { infoVerification: 1, emotionalStability: 1, boundaryAwareness: 1, riskJudgment: 1 },
+        isPositive: false,
       },
       {
         label: "B",
         text: "建議對方找銀行或家人",
-        scores: { infoVerification: 2, emotionalStability: 3, boundaryAwareness: 3, riskJudgment: 3 },
+        isPositive: true,
       },
       {
         label: "C",
         text: "明確拒絕",
-        scores: { infoVerification: 2, emotionalStability: 4, boundaryAwareness: 4, riskJudgment: 4 },
+        isPositive: true,
       },
       {
         label: "D",
         text: "請他提出正式借款證明",
-        scores: { infoVerification: 4, emotionalStability: 3, boundaryAwareness: 2, riskJudgment: 3 },
+        isPositive: true,
       },
     ],
   },
@@ -178,22 +178,22 @@ export const questions: Question[] = [
       {
         label: "A",
         text: "立刻填寫，怕錯過",
-        scores: { infoVerification: 1, emotionalStability: 1, boundaryAwareness: 1, riskJudgment: 1 },
+        isPositive: false,
       },
       {
         label: "B",
         text: "查官方網站公告",
-        scores: { infoVerification: 4, emotionalStability: 3, boundaryAwareness: 2, riskJudgment: 3 },
+        isPositive: true,
       },
       {
         label: "C",
         text: "不可能，直接刪",
-        scores: { infoVerification: 2, emotionalStability: 4, boundaryAwareness: 4, riskJudgment: 4 },
+        isPositive: true,
       },
       {
         label: "D",
         text: "問問親友是否也收到",
-        scores: { infoVerification: 2, emotionalStability: 2, boundaryAwareness: 2, riskJudgment: 2 },
+        isPositive: false,
       },
     ],
   },
@@ -205,22 +205,22 @@ export const questions: Question[] = [
       {
         label: "A",
         text: "馬上照做",
-        scores: { infoVerification: 1, emotionalStability: 1, boundaryAwareness: 1, riskJudgment: 1 },
+        isPositive: false,
       },
       {
         label: "B",
         text: "請對方稍等，自己確認",
-        scores: { infoVerification: 3, emotionalStability: 3, boundaryAwareness: 2, riskJudgment: 3 },
+        isPositive: true,
       },
       {
         label: "C",
         text: "掛掉",
-        scores: { infoVerification: 2, emotionalStability: 4, boundaryAwareness: 4, riskJudgment: 4 },
+        isPositive: true,
       },
       {
         label: "D",
         text: "請對方改用書面通知",
-        scores: { infoVerification: 4, emotionalStability: 3, boundaryAwareness: 3, riskJudgment: 3 },
+        isPositive: true,
       },
     ],
   },
@@ -232,22 +232,22 @@ export const questions: Question[] = [
       {
         label: "A",
         text: "先轉一點",
-        scores: { infoVerification: 1, emotionalStability: 1, boundaryAwareness: 1, riskJudgment: 1 },
+        isPositive: false,
       },
       {
         label: "B",
         text: "打電話確認本人",
-        scores: { infoVerification: 4, emotionalStability: 3, boundaryAwareness: 3, riskJudgment: 4 },
+        isPositive: true,
       },
       {
         label: "C",
         text: "直接拒絕",
-        scores: { infoVerification: 2, emotionalStability: 4, boundaryAwareness: 4, riskJudgment: 3 },
+        isPositive: true,
       },
       {
         label: "D",
         text: "請他提供更多說明",
-        scores: { infoVerification: 3, emotionalStability: 2, boundaryAwareness: 2, riskJudgment: 2 },
+        isPositive: false,
       },
     ],
   },
@@ -260,22 +260,22 @@ export const questions: Question[] = [
       {
         label: "A",
         text: "有點心動，想了解",
-        scores: { infoVerification: 1, emotionalStability: 1, boundaryAwareness: 1, riskJudgment: 1 },
+        isPositive: false,
       },
       {
         label: "B",
         text: "判斷不合理，略過",
-        scores: { infoVerification: 3, emotionalStability: 4, boundaryAwareness: 3, riskJudgment: 4 },
+        isPositive: true,
       },
       {
         label: "C",
         text: "查資料但不投入",
-        scores: { infoVerification: 4, emotionalStability: 3, boundaryAwareness: 3, riskJudgment: 3 },
+        isPositive: true,
       },
       {
         label: "D",
         text: "問問身邊是否有人投過",
-        scores: { infoVerification: 2, emotionalStability: 2, boundaryAwareness: 2, riskJudgment: 2 },
+        isPositive: false,
       },
     ],
   },
@@ -288,22 +288,22 @@ export const questions: Question[] = [
       {
         label: "A",
         text: "提供，反正不是密碼",
-        scores: { infoVerification: 1, emotionalStability: 1, boundaryAwareness: 1, riskJudgment: 1 },
+        isPositive: false,
       },
       {
         label: "B",
         text: "拒絕並詢問用途",
-        scores: { infoVerification: 3, emotionalStability: 3, boundaryAwareness: 3, riskJudgment: 3 },
+        isPositive: true,
       },
       {
         label: "C",
         text: "完全不提供",
-        scores: { infoVerification: 2, emotionalStability: 4, boundaryAwareness: 4, riskJudgment: 4 },
+        isPositive: true,
       },
       {
         label: "D",
         text: "遮住部分資料再給",
-        scores: { infoVerification: 2, emotionalStability: 2, boundaryAwareness: 2, riskJudgment: 2 },
+        isPositive: false,
       },
     ],
   },
@@ -312,128 +312,184 @@ export const questions: Question[] = [
 export const defenseTypes = [
   {
     index: 0,
-    name: "情緒牽動型",
-    subtitle: "較容易受情境牽動",
+    name: "浪推前行者",
+    subtitle: "在急迫與關係中，容易被情境一路推著走",
     color: "hsl(var(--type-red))",
     colorClass: "bg-[hsl(var(--type-red))]",
     borderClass: "border-[hsl(var(--type-red))]",
     textClass: "text-[hsl(var(--type-red))]",
+    illustration: {
+      src: "/浪推前行者.png",
+      alt: "浪推前行者插圖",
+    },
+    description: [
+      "你很重視關係，也不喜歡讓事情變得尷尬或破裂。🤝",
+      "當對方表現得很急、很可憐，或讓你覺得「如果我不幫，事情會更糟」，你往往會先行動再說。⏳",
+      "很多時候你其實不是不知道有風險。",
+      "只是那個當下，情緒跑得比理性快了一點點。💭",
+      "你並不衝動，只是太在乎、不想出錯。💛",
+      "但詐騙往往正是抓住這個「不想讓事情變壞」的心。⚠️",
+      "目前的狀態下，你需要的不是更用力提醒自己要小心。",
+      "而是幫自己多留一個「可以暫停」的空間，讓任何「很急的事」，都不再只能你一個人扛。🛑",
+    ],
     traits: [
-      "容易因「很急、怕錯過、怕關係破裂」而先行動",
-      "在時間壓力或情感連結下，較難停下來確認",
+      "你很重視關係，也不喜歡讓事情變得尷尬或破裂。",
+      "當對方表現得很急、很可憐、或讓你覺得「如果我不幫，事情會更糟」，你往往會先行動再說。",
+      "很多時候你其實不是不知道有風險，而是那個當下，情緒跑得比理性快了一點點。",
+      "你並不衝動，只是太在乎、不想出錯。但詐騙往往正是抓住這個「不想讓事情變壞」的心。",
     ],
     tips: [
-      "多數詐騙正是利用「急」來推進",
-      "停一下，本身就是一種保護",
+      "目前的狀態下，你需要的不是更用力提醒自己要小心，而是幫自己多留一個「可以暫停」的空間，讓任何「很急的事」，都不再只能你一個人扛。",
     ],
   },
   {
     index: 1,
-    name: "觀望但易被說服型",
-    subtitle: "目前判定為你的主要防禦型態",
+    name: "門口停步者",
+    subtitle: "察覺異常，卻還在門口猶豫是否前進",
     color: "hsl(var(--type-orange))",
     colorClass: "bg-[hsl(var(--type-orange))]",
     borderClass: "border-[hsl(var(--type-orange))]",
     textClass: "text-[hsl(var(--type-orange))]",
+    illustration: {
+      src: "/門口停步者.png",
+      alt: "門口停步者插圖",
+    },
+    description: [
+      "你通常第一時間就會覺得哪裡怪怪的。🤔",
+      "你會多看一眼、多想一下，也不會馬上全然相信。",
+      "但你也很難立刻拒絕。",
+      "一方面不想誤會對方，一方面又怕自己判斷錯誤。😅",
+      "於是常常選擇「再看看」、「先不要把話說死」。",
+      "這樣的你，其實很理性，也很體貼。🫶",
+      "只是當事情被一再推進，你反而容易被拖著走。",
+      "這不是因為你不夠警覺。",
+      "而是你太習慣幫事情留後路，卻忘了自己也需要界線。🧱",
+      "現在對你來說，最重要的不是變得更果斷。",
+      "而是練習告訴自己：不馬上答應，也是一種負責任的選擇。✅",
+    ],
     traits: [
-      "能察覺異常，但不確定是否該拒絕",
-      "容易選擇「再看看」「先保留彈性」",
+      "你通常第一時間就會覺得哪裡怪怪的，會多看一眼、多想一下，也不會馬上全然相信。",
+      "但你也很難立刻拒絕，一方面不想誤會對方，一方面又怕自己判斷錯誤。",
+      "常常選擇「再看看」、「先不要把話說死」，在推進中容易被拖著走。",
+      "你很理性也很體貼，但太習慣幫事情留後路，卻忘了自己也需要界線。",
     ],
     tips: [
-      "猶豫本身不是錯",
-      "關鍵在於：不要讓對方替你決定下一步",
+      "現在對你來說，最重要的不是變得更果斷，而是練習告訴自己：不馬上答應，也是一種負責任的選擇。",
     ],
   },
   {
     index: 2,
-    name: "理性查證型",
-    subtitle: "防禦反應相對穩定",
+    name: "看圖再行者",
+    subtitle: "習慣查證方向，再決定行動",
     color: "hsl(var(--type-yellow))",
     colorClass: "bg-[hsl(var(--type-yellow))]",
     borderClass: "border-[hsl(var(--type-yellow))]",
     textClass: "text-[hsl(var(--type-yellow))]",
+    illustration: {
+      src: "/看圖再行者.png",
+      alt: "看圖再行者插圖",
+    },
+    description: [
+      "你面對可疑情境時，通常會先查資料、找來源、比對資訊。🔍",
+      "你不太容易被單一說法說服，也不喜歡只靠感覺做決定。",
+      "大多數時候，這讓你避開了很多風險。",
+      "你知道怎麼慢下來、怎麼確認、怎麼保護自己。🧭",
+      "但有些時候，當事情牽涉到熟人、家人或情感關係，你可能會不自覺放低原本的標準。",
+      "這並不是疏忽。",
+      "而是因為你太習慣把「信任」當成人與人之間的基礎。💬",
+      "對你而言，持續提醒自己「再熟，也值得再確認一次」，會是讓防禦更完整的關鍵。✅",
+    ],
     traits: [
-      "會主動查資料、找官方來源",
-      "不輕易被單一說法說服",
+      "面對可疑情境時會先查資料、找來源、比對資訊，不喜歡只靠感覺做決定。",
+      "這樣的節奏讓你避開很多風險，也知道怎麼慢下來、怎麼確認、怎麼保護自己。",
+      "當事情牽涉到熟人、家人或情感關係時，可能會不自覺放低原本的標準。",
+      "這並不是疏忽，而是因為你太習慣把「信任」當成人與人之間的基礎。",
     ],
     tips: [
-      "在熟人或情感情境中，仍要維持同樣標準",
+      "持續提醒自己「再熟，也值得再確認一次」，會是讓防禦更完整的關鍵。",
     ],
   },
   {
     index: 3,
-    name: "高防禦穩定型",
-    subtitle: "防禦反射清楚",
+    name: "關門守線者",
+    subtitle: "界線清楚，知道什麼時候該關門保護自己",
     color: "hsl(var(--type-green))",
     colorClass: "bg-[hsl(var(--type-green))]",
     borderClass: "border-[hsl(var(--type-green))]",
     textClass: "text-[hsl(var(--type-green))]",
+    illustration: {
+      src: "/關門守線者.png",
+      alt: "關門守線者插圖",
+    },
+    description: [
+      "你對界線很清楚，知道什麼不能給、什麼不需要解釋、什麼時候該直接拒絕。🚪",
+      "當事情不合理，你通常能快速做出判斷，不太會被情緒或話術牽著走。",
+      "這樣的防禦反射，多半來自過往的經驗、學習，或曾經踩過的雷。🧭",
+      "需要提醒的是，詐騙手法會一直變化。",
+      "而過度相信「我不會被騙」本身，也可能成為破口。⚠️",
+      "對你來說，持續更新資訊、保持彈性與謙遜，會比單純自信更能守住這份穩定。🌱",
+    ],
     traits: [
-      "界線明確，能快速拒絕",
-      "不容易被話術牽著走",
+      "你對界線很清楚，知道什麼不能給、什麼不需要解釋、什麼時候該直接拒絕。",
+      "當事情不合理，通常能快速做出判斷，不太會被情緒或話術牽著走。",
+      "這樣的防禦反射，多半來自過往的經驗、學習，或曾經踩過的雷。",
     ],
     tips: [
-      "詐騙手法會不斷更新",
-      "維持警覺比自信更重要",
+      "詐騙手法會一直變化，而過度相信「我不會被騙」本身，也可能成為破口。",
+      "持續更新資訊、保持彈性與謙遜，會比單純自信更能守住這份穩定。",
     ],
   },
 ]
 
-// Average scores (simulated population average for radar chart comparison)
+// Average scores for radar chart comparison (0-10 scale).
+// Defaults to a neutral baseline until real averages are available.
 export const averageScores = {
-  infoVerification: 2.6,
-  emotionalStability: 2.8,
-  boundaryAwareness: 2.5,
-  riskJudgment: 2.7,
+  infoVerification: 5,
+  emotionalStability: 5,
+  boundaryAwareness: 5,
+  riskJudgment: 5,
 }
 
+const optionTypeMap: Record<OptionLabel, number> = {
+  A: 0, // 浪推前行者
+  B: 2, // 看圖再行者
+  C: 3, // 關門守線者
+  D: 1, // 門口停步者
+}
+
+const optionOrder: OptionLabel[] = ["A", "B", "C", "D"]
+
 export function calculateResult(answers: number[]): QuizResult {
-  const totalScores = {
-    infoVerification: 0,
-    emotionalStability: 0,
-    boundaryAwareness: 0,
-    riskJudgment: 0,
+  const optionCounts: Record<OptionLabel, number> = {
+    A: 0,
+    B: 0,
+    C: 0,
+    D: 0,
   }
 
   answers.forEach((answerIndex, questionIndex) => {
     const question = questions[questionIndex]
-    if (question && question.options[answerIndex]) {
-      const s = question.options[answerIndex].scores
-      totalScores.infoVerification += s.infoVerification
-      totalScores.emotionalStability += s.emotionalStability
-      totalScores.boundaryAwareness += s.boundaryAwareness
-      totalScores.riskJudgment += s.riskJudgment
-    }
+    const option = question?.options[answerIndex]
+    if (!option) return
+
+    optionCounts[option.label] += 1
   })
 
-  // Normalize to 0-10 scale (max possible per dimension = 4 * 10 = 40, min = 10)
-  const normalize = (v: number) => Math.round(((v - 10) / 30) * 10 * 10) / 10
-
   const scores = {
-    infoVerification: normalize(totalScores.infoVerification),
-    emotionalStability: normalize(totalScores.emotionalStability),
-    boundaryAwareness: normalize(totalScores.boundaryAwareness),
-    riskJudgment: normalize(totalScores.riskJudgment),
+    emotionalStability: Math.max(0, 10 - optionCounts.A),
+    infoVerification: optionCounts.B,
+    boundaryAwareness: optionCounts.C,
+    riskJudgment: Math.max(0, 10 - optionCounts.D),
   }
 
-  // Determine type based on average score
-  const avg =
-    (scores.infoVerification +
-      scores.emotionalStability +
-      scores.boundaryAwareness +
-      scores.riskJudgment) /
-    4
+  const dominantOption = optionOrder.reduce((current, option) => {
+    if (optionCounts[option] > optionCounts[current]) {
+      return option
+    }
+    return current
+  }, optionOrder[0])
 
-  let typeIndex: number
-  if (avg <= 2.5) {
-    typeIndex = 0 // 情緒牽動型
-  } else if (avg <= 5) {
-    typeIndex = 1 // 觀望但易被說服型
-  } else if (avg <= 7.5) {
-    typeIndex = 2 // 理性查證型
-  } else {
-    typeIndex = 3 // 高防禦穩定型
-  }
+  const typeIndex = optionTypeMap[dominantOption]
 
   return {
     scores,

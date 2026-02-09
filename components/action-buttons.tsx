@@ -13,12 +13,30 @@ import {
   ExternalLink,
 } from "lucide-react"
 
-export function ActionButtons() {
+interface ActionButtonsProps {
+  defenseTypeName?: string
+  defenseTypeIndex?: number
+}
+
+export function ActionButtons({ defenseTypeName, defenseTypeIndex }: ActionButtonsProps) {
   const [copied, setCopied] = useState(false)
+
+  const getShareUrl = () => {
+    const url = new URL(window.location.href)
+    url.search = ""
+    url.hash = ""
+    if (defenseTypeName) {
+      url.searchParams.set("type", defenseTypeName)
+    }
+    if (typeof defenseTypeIndex === "number" && Number.isFinite(defenseTypeIndex)) {
+      url.searchParams.set("t", String(defenseTypeIndex))
+    }
+    return url.toString()
+  }
 
   const handleCopyLink = async () => {
     try {
-      await navigator.clipboard.writeText(window.location.href)
+      await navigator.clipboard.writeText(getShareUrl())
       setCopied(true)
       setTimeout(() => setCopied(false), 2000)
     } catch {
@@ -27,14 +45,15 @@ export function ActionButtons() {
   }
 
   const handleLineShare = () => {
-    const url = encodeURIComponent(window.location.href)
-    const text = encodeURIComponent("我剛完成了詐騙防禦能力檢測，來看看你的防禦類型！")
+    const url = encodeURIComponent(getShareUrl())
+    const text = encodeURIComponent(defenseTypeName ? `我的防禦類型：${defenseTypeName}` : "我剛完成了詐騙防禦能力檢測，來看看你的防禦類型！")
     window.open(`https://social-plugins.line.me/lineit/share?url=${url}&text=${text}`, "_blank")
   }
 
   const handleFBShare = () => {
-    const url = encodeURIComponent(window.location.href)
-    window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, "_blank")
+    const url = encodeURIComponent(getShareUrl())
+    const quote = defenseTypeName ? `&quote=${encodeURIComponent(`我的防禦類型：${defenseTypeName}`)}` : ""
+    window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}${quote}`, "_blank")
   }
 
   const handleIGShare = () => {
@@ -57,9 +76,18 @@ export function ActionButtons() {
       {/* CTA Button 1 */}
       <Card className="border-2 border-primary/20 bg-card overflow-hidden">
         <CardContent className="p-5">
-          <Button className="w-full gap-2 bg-primary text-primary-foreground hover:bg-primary/90 h-12 text-base font-semibold rounded-xl">
-            <ExternalLink className="h-4 w-4" />
-            個人財務線上諮詢
+          <Button
+            asChild
+            className="w-full gap-2 bg-primary text-primary-foreground hover:bg-primary/90 h-12 text-base font-semibold rounded-xl"
+          >
+            <a
+              href="https://www.familyfinhealth.com/online-consultation"
+              target="_blank"
+              rel="noreferrer noopener"
+            >
+              <ExternalLink className="h-4 w-4" />
+              個人財務線上諮詢
+            </a>
           </Button>
           <p className="mt-3 text-xs text-muted-foreground leading-relaxed">
             如果你最近曾遇到可疑訊息、投資邀請，或對自己的判斷感到不安，可以和專業顧問一起整理目前的狀況。（線上進行，重點是釐清與陪伴）
@@ -70,12 +98,21 @@ export function ActionButtons() {
       {/* CTA Button 2 */}
       <Card className="border-2 border-primary/20 bg-card overflow-hidden">
         <CardContent className="p-5">
-          <Button className="w-full gap-2 bg-primary text-primary-foreground hover:bg-primary/90 h-12 text-base font-semibold rounded-xl">
-            <Bot className="h-4 w-4" />
-            問問 AI
+          <Button
+            asChild
+            className="w-full gap-2 bg-primary text-primary-foreground hover:bg-primary/90 h-12 text-base font-semibold rounded-xl"
+          >
+            <a
+              href="https://www.familyfinhealth.com/ask-ivy"
+              target="_blank"
+              rel="noreferrer noopener"
+            >
+              <Bot className="h-4 w-4" />
+              問問 AI
+            </a>
           </Button>
           <p className="mt-3 text-xs text-muted-foreground leading-relaxed">
-            把你收到的訊息、話術或連結內容貼上來，AI 會協助你一起拆解可能的風險點。（不會留下個人資料紀錄）
+            把你收到的訊息、話術或連結內容貼上來問問AI，AI 會協助你一起拆解可能的風險點。
           </p>
         </CardContent>
       </Card>

@@ -19,7 +19,7 @@ export function DefenseRadarChart({ result }: DefenseRadarChartProps) {
   const data = Object.entries(result.scores).map(([key, value]) => ({
     dimension: dimensionLabels[key] || key,
     userScore: value,
-    avgScore: averageScores[key as keyof typeof averageScores] * (10 / 4),
+    avgScore: averageScores[key as keyof typeof averageScores],
   }))
 
   return (
@@ -41,6 +41,7 @@ export function DefenseRadarChart({ result }: DefenseRadarChartProps) {
             <PolarRadiusAxis
               angle={90}
               domain={[0, 10]}
+              ticks={[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
               tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 10 }}
               axisLine={false}
             />
@@ -69,17 +70,13 @@ export function DefenseRadarChart({ result }: DefenseRadarChartProps) {
       <div className="flex items-center justify-center gap-6 text-xs text-muted-foreground">
         <div className="flex items-center gap-2">
           <span className="inline-block h-3 w-3 rounded-sm bg-primary/60" />
-          <span>你的防禦反應分數</span>
+          <span>你的防禦指數</span>
         </div>
         <div className="flex items-center gap-2">
           <span className="inline-block h-3 w-3 rounded-sm bg-muted-foreground/30" />
           <span>所有受測者的平均分布</span>
         </div>
       </div>
-
-      <p className="text-xs text-muted-foreground text-center leading-relaxed">
-        平均分布來自歷來完成本測驗的匿名受測者整體結果。
-      </p>
     </div>
   )
 }
