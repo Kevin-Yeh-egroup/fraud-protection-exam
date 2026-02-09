@@ -63,8 +63,8 @@ export function QuizQuestion({ question, selectedAnswer, onAnswer }: QuizQuestio
                 {option.label}
               </span>
               <span className={cn(
-                "pt-1 text-base leading-relaxed transition-colors",
-                isSelected ? "text-foreground font-medium" : "text-foreground/80"
+                "pt-1 text-base leading-relaxed transition-colors font-medium",
+                isSelected ? "text-foreground" : "text-foreground/80"
               )}>
                 {option.text}
               </span>
