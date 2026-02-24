@@ -90,7 +90,7 @@ export function ActionButtons({ defenseTypeName, defenseTypeIndex }: ActionButto
             </a>
           </Button>
           <p className="mt-3 text-xs text-muted-foreground leading-relaxed">
-            如果你最近曾遇到可疑訊息、投資邀請，或對自己的判斷感到不安，可以和專業顧問一起整理目前的狀況。（線上進行，重點是釐清與陪伴）
+            如果你最近曾遇到可疑訊息、投資邀請，或對自己的判斷感到不安，可以和財務健康諮詢師一起線上討論整理目前的狀況，重點是有多一個人協助您釐清與陪伴
           </p>
         </CardContent>
       </Card>

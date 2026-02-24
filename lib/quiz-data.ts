@@ -11,7 +11,8 @@ export type DimensionKey =
 export type OptionLabel = "A" | "B" | "C" | "D"
 
 export interface QuestionOption {
-  label: OptionLabel
+  /** 計分用：此選項內容對應的維度（A/B/C/D） */
+  dimension: OptionLabel
   text: string
   isPositive: boolean
 }
@@ -37,26 +38,10 @@ export const questions: Question[] = [
     scenario:
       '你突然收到一則 LINE 訊息：\n「我是你朋友小美，新手機壞了，先用這個帳號，加我一下～」',
     options: [
-      {
-        label: "A",
-        text: "立刻加好友，之後再確認",
-        isPositive: false,
-      },
-      {
-        label: "B",
-        text: "詢問對方能否用舊方式聯絡",
-        isPositive: true,
-      },
-      {
-        label: "C",
-        text: "完全不回、不加",
-        isPositive: true,
-      },
-      {
-        label: "D",
-        text: "覺得怪怪的，但還是加了再觀察",
-        isPositive: false,
-      },
+      { dimension: "C", text: "完全不回、不加", isPositive: true },
+      { dimension: "B", text: "詢問對方能否用舊方式聯絡", isPositive: true },
+      { dimension: "D", text: "覺得怪怪的，但還是加了再觀察", isPositive: false },
+      { dimension: "A", text: "立刻加好友，之後再確認", isPositive: false },
     ],
   },
   {
@@ -65,26 +50,10 @@ export const questions: Question[] = [
     scenario:
       '你收到簡訊：\n「恭喜中獎！請於 24 小時內點擊連結填寫資料，否則失效」',
     options: [
-      {
-        label: "A",
-        text: "點連結看看再說",
-        isPositive: false,
-      },
-      {
-        label: "B",
-        text: "搜尋活動名稱確認真偽",
-        isPositive: true,
-      },
-      {
-        label: "C",
-        text: "直接刪除",
-        isPositive: true,
-      },
-      {
-        label: "D",
-        text: "轉傳給朋友問意見",
-        isPositive: false,
-      },
+      { dimension: "C", text: "直接刪除", isPositive: true },
+      { dimension: "A", text: "點連結看看再說", isPositive: false },
+      { dimension: "D", text: "轉傳給朋友問意見", isPositive: false },
+      { dimension: "B", text: "搜尋活動名稱確認真偽", isPositive: true },
     ],
   },
   {
@@ -92,26 +61,10 @@ export const questions: Question[] = [
     tag: "投資社群",
     scenario: '朋友邀你加入一個投資群，裡面每天都有人「曬獲利」',
     options: [
-      {
-        label: "A",
-        text: "先跟著少量試試",
-        isPositive: false,
-      },
-      {
-        label: "B",
-        text: "要求看完整交易紀錄與公司資料",
-        isPositive: true,
-      },
-      {
-        label: "C",
-        text: "覺得太誇張，直接退出",
-        isPositive: true,
-      },
-      {
-        label: "D",
-        text: "潛水觀察一陣子",
-        isPositive: false,
-      },
+      { dimension: "D", text: "潛水觀察一陣子", isPositive: false },
+      { dimension: "C", text: "覺得太誇張，直接退出", isPositive: true },
+      { dimension: "B", text: "要求看完整交易紀錄與公司資料", isPositive: true },
+      { dimension: "A", text: "先跟著少量試試", isPositive: false },
     ],
   },
   {
@@ -120,26 +73,10 @@ export const questions: Question[] = [
     scenario:
       '你接到電話：\n「我是銀行客服，偵測到異常交易，請立刻配合確認帳戶」',
     options: [
-      {
-        label: "A",
-        text: "按照指示操作",
-        isPositive: false,
-      },
-      {
-        label: "B",
-        text: "掛掉後自己打銀行客服",
-        isPositive: true,
-      },
-      {
-        label: "C",
-        text: "直接掛掉，不理會",
-        isPositive: true,
-      },
-      {
-        label: "D",
-        text: "問對方姓名、分機再決定",
-        isPositive: false,
-      },
+      { dimension: "A", text: "按照指示操作", isPositive: false },
+      { dimension: "D", text: "問對方姓名、分機再決定", isPositive: false },
+      { dimension: "C", text: "直接掛掉，不理會", isPositive: true },
+      { dimension: "B", text: "掛掉後自己打銀行客服", isPositive: true },
     ],
   },
   {
@@ -147,26 +84,10 @@ export const questions: Question[] = [
     tag: "情感型詐騙",
     scenario: "網路上認識的對象聊了兩個月，突然說需要資金周轉",
     options: [
-      {
-        label: "A",
-        text: "小額幫忙，畢竟有感情",
-        isPositive: false,
-      },
-      {
-        label: "B",
-        text: "建議對方找銀行或家人",
-        isPositive: true,
-      },
-      {
-        label: "C",
-        text: "明確拒絕",
-        isPositive: true,
-      },
-      {
-        label: "D",
-        text: "請他提出正式借款證明",
-        isPositive: true,
-      },
+      { dimension: "C", text: "明確拒絕", isPositive: true },
+      { dimension: "D", text: "請他提出正式借款證明", isPositive: true },
+      { dimension: "B", text: "建議對方找銀行或家人", isPositive: true },
+      { dimension: "A", text: "小額幫忙，畢竟有感情", isPositive: false },
     ],
   },
   {
@@ -175,26 +96,10 @@ export const questions: Question[] = [
     scenario:
       '收到訊息：\n「政府補助款未領取，請登入網站填寫資料」',
     options: [
-      {
-        label: "A",
-        text: "立刻填寫，怕錯過",
-        isPositive: false,
-      },
-      {
-        label: "B",
-        text: "查官方網站公告",
-        isPositive: true,
-      },
-      {
-        label: "C",
-        text: "不可能，直接刪",
-        isPositive: true,
-      },
-      {
-        label: "D",
-        text: "問問親友是否也收到",
-        isPositive: false,
-      },
+      { dimension: "D", text: "問問親友是否也收到", isPositive: false },
+      { dimension: "B", text: "查官方網站公告", isPositive: true },
+      { dimension: "A", text: "立刻填寫，怕錯過", isPositive: false },
+      { dimension: "C", text: "不可能，直接刪", isPositive: true },
     ],
   },
   {
@@ -202,26 +107,10 @@ export const questions: Question[] = [
     tag: "高壓時間感",
     scenario: '對方說：\n「現在不處理，帳戶會被凍結！」',
     options: [
-      {
-        label: "A",
-        text: "馬上照做",
-        isPositive: false,
-      },
-      {
-        label: "B",
-        text: "請對方稍等，自己確認",
-        isPositive: true,
-      },
-      {
-        label: "C",
-        text: "掛掉",
-        isPositive: true,
-      },
-      {
-        label: "D",
-        text: "請對方改用書面通知",
-        isPositive: true,
-      },
+      { dimension: "B", text: "請對方稍等，自己確認", isPositive: true },
+      { dimension: "C", text: "掛掉", isPositive: true },
+      { dimension: "D", text: "請對方改用書面通知", isPositive: true },
+      { dimension: "A", text: "馬上照做", isPositive: false },
     ],
   },
   {
@@ -229,26 +118,10 @@ export const questions: Question[] = [
     tag: "熟人借錢",
     scenario: "親戚突然傳訊要你幫忙代墊一筆錢，說很急",
     options: [
-      {
-        label: "A",
-        text: "先轉一點",
-        isPositive: false,
-      },
-      {
-        label: "B",
-        text: "打電話確認本人",
-        isPositive: true,
-      },
-      {
-        label: "C",
-        text: "直接拒絕",
-        isPositive: true,
-      },
-      {
-        label: "D",
-        text: "請他提供更多說明",
-        isPositive: false,
-      },
+      { dimension: "D", text: "請他提供更多說明", isPositive: false },
+      { dimension: "A", text: "先轉一點", isPositive: false },
+      { dimension: "C", text: "直接拒絕", isPositive: true },
+      { dimension: "B", text: "打電話確認本人", isPositive: true },
     ],
   },
   {
@@ -257,26 +130,10 @@ export const questions: Question[] = [
     scenario:
       '看到投資廣告：\n「保證每月 10% 報酬，穩賺不賠」',
     options: [
-      {
-        label: "A",
-        text: "有點心動，想了解",
-        isPositive: false,
-      },
-      {
-        label: "B",
-        text: "判斷不合理，略過",
-        isPositive: true,
-      },
-      {
-        label: "C",
-        text: "查資料但不投入",
-        isPositive: true,
-      },
-      {
-        label: "D",
-        text: "問問身邊是否有人投過",
-        isPositive: false,
-      },
+      { dimension: "C", text: "查資料但不投入", isPositive: true },
+      { dimension: "B", text: "判斷不合理，略過", isPositive: true },
+      { dimension: "D", text: "問問身邊是否有人投過", isPositive: false },
+      { dimension: "A", text: "有點心動，想了解", isPositive: false },
     ],
   },
   {
@@ -285,26 +142,10 @@ export const questions: Question[] = [
     scenario:
       '有人要求你提供身分證、帳戶照片\n「只是核對用」',
     options: [
-      {
-        label: "A",
-        text: "提供，反正不是密碼",
-        isPositive: false,
-      },
-      {
-        label: "B",
-        text: "拒絕並詢問用途",
-        isPositive: true,
-      },
-      {
-        label: "C",
-        text: "完全不提供",
-        isPositive: true,
-      },
-      {
-        label: "D",
-        text: "遮住部分資料再給",
-        isPositive: false,
-      },
+      { dimension: "B", text: "拒絕並詢問用途", isPositive: true },
+      { dimension: "C", text: "完全不提供", isPositive: true },
+      { dimension: "A", text: "提供，反正不是密碼", isPositive: false },
+      { dimension: "D", text: "遮住部分資料再給", isPositive: false },
     ],
   },
 ]
@@ -472,7 +313,7 @@ export function calculateResult(answers: number[]): QuizResult {
     const option = question?.options[answerIndex]
     if (!option) return
 
-    optionCounts[option.label] += 1
+    optionCounts[option.dimension] += 1
   })
 
   const scores = {

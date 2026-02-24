@@ -35,9 +35,10 @@ export function QuizQuestion({ question, selectedAnswer, onAnswer }: QuizQuestio
           const isSelected = selectedAnswer === index
           const isHovered = hoveredIndex === index
 
+          const displayLabel = ["A", "B", "C", "D"][index]
           return (
             <button
-              key={option.label}
+              key={`${index}-${option.text}`}
               type="button"
               onClick={() => onAnswer(index)}
               onMouseEnter={() => setHoveredIndex(index)}
@@ -60,7 +61,7 @@ export function QuizQuestion({ question, selectedAnswer, onAnswer }: QuizQuestio
                     : "bg-secondary text-secondary-foreground"
                 )}
               >
-                {option.label}
+                {displayLabel}
               </span>
               <span className={cn(
                 "pt-1 text-base leading-relaxed transition-colors font-medium",
