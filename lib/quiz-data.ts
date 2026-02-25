@@ -36,7 +36,7 @@ export const questions: Question[] = [
     id: 1,
     tag: "陌生訊息",
     scenario:
-      '你突然收到一則 LINE 訊息：\n「我是你朋友小美，新手機壞了，先用這個帳號，加我一下～」',
+      '你突然收到一則 LINE 訊息：\n「我是你朋友小美，原本手機壞了，先用這個帳號，加我一下～」',
     options: [
       { dimension: "C", text: "完全不回、不加", isPositive: true },
       { dimension: "B", text: "詢問對方能否用舊方式聯絡", isPositive: true },
